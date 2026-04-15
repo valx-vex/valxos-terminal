@@ -24,6 +24,18 @@
       "command": ["npx", "-y", "@executeautomation/playwright-mcp-server"],
       "enabled": false,
       "timeout": 10000
+    },
+    "mempalace": {
+      "type": "local",
+      "command": ["npx", "-y", "@valxos/mempalace-mcp"],
+      "enabled": false,
+      "timeout": 10000
+    },
+    "wiki": {
+      "type": "local",
+      "command": ["npx", "-y", "@valxos/wiki-mcp"],
+      "enabled": false,
+      "timeout": 5000
     }
   },
   "permission": {

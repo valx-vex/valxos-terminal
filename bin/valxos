@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# VALXOS Terminal launcher
+# Sets brand flag and delegates to opencode CLI
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+export VALXOS_BRAND=1
+
+# If installed globally, use the global opencode binary
+if command -v opencode &>/dev/null; then
+  exec opencode "$@"
+fi
+
+# Otherwise run from repo
+exec bun run --cwd "$REPO_ROOT" opencode "$@"
