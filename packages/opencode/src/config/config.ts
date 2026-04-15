@@ -40,6 +40,7 @@ import { Flock } from "@/util/flock"
 import { isPathPluginSpec, parsePluginSpecifier, resolvePathPluginTarget } from "@/plugin/shared"
 import { Npm } from "@/npm"
 import { discoverClaudeCompat, type ClaudeCompatState } from "@/compat/claude/config"
+import { Brand } from "../brand"
 
 export namespace Config {
   const ModelId = z.string().meta({ $ref: "https://models.dev/model-schema.json#/$defs/Model" })
@@ -1180,8 +1181,13 @@ export namespace Config {
         })
 
         const loadGlobal = Effect.fnUntraced(function* () {
-          let result: Info = pipe(
-            {},
+          // Start with brand default config if available (e.g., VALXOS default config)
+          const brandDefaultPath = Brand.defaultConfigPath()
+          let result: Info = brandDefaultPath ? yield* loadFile(brandDefaultPath) : {}
+
+          // Merge user global configs on top of brand defaults
+          result = pipe(
+            result,
             mergeDeep(yield* loadFile(path.join(Global.Path.config, "config.json"))),
             mergeDeep(yield* loadFile(path.join(Global.Path.config, "opencode.json"))),
             mergeDeep(yield* loadFile(path.join(Global.Path.config, "opencode.jsonc"))),

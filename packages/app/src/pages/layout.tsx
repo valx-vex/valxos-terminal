@@ -1223,6 +1223,14 @@ export default function Layout(props: ParentProps) {
     })
   }
 
+  function openWiki() {
+    const run = ++dialogRun
+    void import("@/components/dialog-wiki").then((x) => {
+      if (dialogDead || dialogRun !== run) return
+      dialog.show(() => <x.DialogWiki />)
+    })
+  }
+
   function projectRoot(directory: string) {
     const key = workspaceKey(directory)
     const project = layout.projects
@@ -2364,6 +2372,7 @@ export default function Layout(props: ParentProps) {
       onOpenSettings={openSettings}
       helpLabel={() => language.t("sidebar.help")}
       onOpenHelp={() => platform.openLink("https://opencode.ai/desktop-feedback")}
+      onOpenWiki={openWiki}
       renderPanel={() =>
         mobile ? <SidebarPanel project={currentProject} mobile /> : <SidebarPanel project={currentProject} merged />
       }

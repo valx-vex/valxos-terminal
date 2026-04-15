@@ -30,6 +30,7 @@ export const SidebarContent = (props: {
   onOpenSettings: () => void
   helpLabel: Accessor<string>
   onOpenHelp: () => void
+  onOpenWiki: () => void
   renderPanel: () => JSX.Element
 }): JSX.Element => {
   const expanded = createMemo(() => !!props.mobile || props.opened())
@@ -95,7 +96,7 @@ export const SidebarContent = (props: {
               icon="brain"
               variant="ghost"
               size="large"
-              onClick={() => alert("Wiki coming soon")}
+              onClick={props.onOpenWiki}
               aria-label="Wiki"
             />
           </Tooltip>
