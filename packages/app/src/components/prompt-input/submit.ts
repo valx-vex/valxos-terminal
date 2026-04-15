@@ -447,6 +447,51 @@ export function createPromptSubmit(input: PromptSubmitInput) {
       return
     }
 
+    // Legion dispatch: /murphy, /alexko, /hal, /legion → route to Legion provider model
+    const LEGION_COMMANDS: Record<string, string> = {
+      murphy: "murphy",
+      alexko: "alexko",
+      hal: "hal",
+      legion: "legion-auto",
+    }
+    if (text.startsWith("/")) {
+      const [cmdName, ...rest] = text.split(" ")
+      const cmdKey = cmdName.slice(1).toLowerCase()
+      const legionModelID = LEGION_COMMANDS[cmdKey]
+      if (legionModelID && rest.length > 0) {
+        const legionText = rest.join(" ")
+        const legionPrompt: Prompt = [
+          { type: "text", content: legionText, start: 0, end: legionText.length },
+          ...images,
+        ]
+        const legionModel = { modelID: legionModelID, providerID: "legion" }
+        const legionDraft: FollowupDraft = {
+          sessionID: session.id,
+          sessionDirectory,
+          prompt: legionPrompt,
+          context,
+          agent,
+          model: legionModel,
+          variant,
+        }
+        clearInput()
+        void sendFollowupDraft({
+          client,
+          sync,
+          globalSync,
+          draft: legionDraft,
+          optimisticBusy: sessionDirectory === projectDirectory,
+        }).catch((err) => {
+          showToast({
+            title: language.t("prompt.toast.promptSendFailed.title"),
+            description: errorMessage(err),
+          })
+          restoreInput()
+        })
+        return
+      }
+    }
+
     if (text.startsWith("/")) {
       const [cmdName, ...args] = text.split(" ")
       const commandName = cmdName.slice(1)
