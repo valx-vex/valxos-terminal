@@ -1,0 +1,194 @@
+{
+  "project": "VALXOS Terminal",
+  "executor": "GPT-5.4 Codex",
+  "recommended_language": "Rust",
+  "modules": [
+    {
+      "id": "config-loader",
+      "priority": "P0",
+      "depends_on": [],
+      "outputs": [
+        "effective config merge",
+        "claude settings ingest"
+      ]
+    },
+    {
+      "id": "umf-core",
+      "priority": "P0",
+      "depends_on": [],
+      "outputs": [
+        "canonical request schema",
+        "provider translation"
+      ]
+    },
+    {
+      "id": "provider-adapters",
+      "priority": "P0",
+      "depends_on": [
+        "umf-core"
+      ],
+      "outputs": [
+        "anthropic",
+        "openai",
+        "gemini",
+        "ollama"
+      ]
+    },
+    {
+      "id": "permission-engine",
+      "priority": "P0",
+      "depends_on": [
+        "config-loader"
+      ],
+      "outputs": [
+        "deny/ask/allow evaluator"
+      ]
+    },
+    {
+      "id": "hook-runner",
+      "priority": "P0.5",
+      "depends_on": [
+        "permission-engine"
+      ],
+      "outputs": [
+        "event dispatcher",
+        "block semantics"
+      ]
+    },
+    {
+      "id": "mcp-host",
+      "priority": "P0",
+      "depends_on": [
+        "config-loader"
+      ],
+      "outputs": [
+        "stdio server support",
+        "lazy tool discovery"
+      ]
+    },
+    {
+      "id": "skill-parser",
+      "priority": "P0",
+      "depends_on": [
+        "config-loader"
+      ],
+      "outputs": [
+        "SKILL.md frontmatter parser",
+        "lazy body load"
+      ]
+    },
+    {
+      "id": "session-store",
+      "priority": "P0",
+      "depends_on": [
+        "umf-core"
+      ],
+      "outputs": [
+        "state.json",
+        "handover artifacts"
+      ]
+    },
+    {
+      "id": "fallback-engine",
+      "priority": "P0",
+      "depends_on": [
+        "provider-adapters"
+      ],
+      "outputs": [
+        "retry/reroute/local fallback",
+        "budget killswitch"
+      ]
+    },
+    {
+      "id": "tui-shell",
+      "priority": "P0",
+      "depends_on": [
+        "provider-adapters",
+        "permission-engine"
+      ],
+      "outputs": [
+        "session UI",
+        "diff review",
+        "model switch"
+      ]
+    },
+    {
+      "id": "routing-engine",
+      "priority": "P1",
+      "depends_on": [
+        "provider-adapters",
+        "fallback-engine"
+      ],
+      "outputs": [
+        "heuristics",
+        "route explanations"
+      ]
+    },
+    {
+      "id": "plugin-shim",
+      "priority": "P1",
+      "depends_on": [
+        "config-loader",
+        "hook-runner",
+        "mcp-host"
+      ],
+      "outputs": [
+        "plugin discovery",
+        "plugin root env"
+      ]
+    },
+    {
+      "id": "semantic-cache",
+      "priority": "P1",
+      "depends_on": [
+        "umf-core",
+        "session-store"
+      ],
+      "outputs": [
+        "local semantic response cache"
+      ]
+    },
+    {
+      "id": "subagent-runtime",
+      "priority": "P2",
+      "depends_on": [
+        "session-store",
+        "routing-engine"
+      ],
+      "outputs": [
+        "forked worker sessions"
+      ]
+    },
+    {
+      "id": "enterprise-policy",
+      "priority": "P2",
+      "depends_on": [
+        "permission-engine"
+      ],
+      "outputs": [
+        "managed config",
+        "non-overridable policies"
+      ]
+    }
+  ],
+  "compatibility": {
+    "mvp_files": [
+      "CLAUDE.md",
+      ".claude/settings.json",
+      ".claude/settings.local.json",
+      ".claude/skills/*/SKILL.md",
+      ".mcp.json"
+    ],
+    "later_files": [
+      ".claude/agents/*.md",
+      ".claude-plugin/plugin.json"
+    ]
+  },
+  "ship_blockers": [
+    "sandbox escape",
+    "insecure remote MCP transport",
+    "terminal lag/flicker",
+    "privacy-unsafe telemetry",
+    "broken onboarding path"
+  ]
+}

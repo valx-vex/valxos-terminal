@@ -1,0 +1,33 @@
+{
+  "name": "@valxos/legion",
+  "version": "1.0.0",
+  "description": "Legion Plugin - Multi-AI dispatch system for VALXOS Terminal",
+  "type": "module",
+  "bin": {
+    "legion": "./bin/legion.mjs"
+  },
+  "main": "./scripts/legion-companion.mjs",
+  "exports": {
+    ".": "./src/index.ts",
+    "./companion": "./scripts/legion-companion.mjs"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "keywords": [
+    "legion",
+    "multi-ai",
+    "dispatch",
+    "claude-code",
+    "gemini",
+    "codex",
+    "ollama"
+  ],
+  "author": "VALX Legion",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "execa": "^9.0.0",
+    "openai": "^4.0.0"
+  }
+}

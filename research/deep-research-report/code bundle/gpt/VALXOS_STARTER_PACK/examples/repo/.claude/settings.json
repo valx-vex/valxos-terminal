@@ -1,0 +1,18 @@
+{
+  "env": {
+    "VALXOS_MODE": "project"
+  },
+  "permissions": {
+    "allow": ["Read(*)", "Bash(npm test*)"],
+    "deny": ["Bash(rm -rf*)"],
+    "ask": ["Write(*)", "Edit(*)"]
+  },
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    }
+  },
+  "rules": ["Follow project coding standards."]
+}

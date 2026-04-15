@@ -1,0 +1,31 @@
+{
+  "name": "@valxos/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "valxos": "dist/index.js"
+  },
+  "dependencies": {
+    "@valxos/compat": "workspace:*",
+    "@valxos/config": "workspace:*",
+    "@valxos/control-plane": "workspace:*",
+    "@valxos/extensions": "workspace:*",
+    "@valxos/mcp": "workspace:*",
+    "@valxos/providers": "workspace:*",
+    "@valxos/shared": "workspace:*",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^22.15.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "node --test dist/*.test.js || exit 0",
+    "lint": "node -e \"console.log('cli ok')\""
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@valxos/config",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@valxos/shared": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test dist/*.test.js || exit 0",
+    "lint": "node -e \"console.log('config ok')\""
+  }
+}

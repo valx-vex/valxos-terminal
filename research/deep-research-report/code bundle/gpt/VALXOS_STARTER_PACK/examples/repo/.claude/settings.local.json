@@ -1,0 +1,9 @@
+{
+  "env": {
+    "VALXOS_LOCAL_ONLY": "true"
+  },
+  "permissions": {
+    "allow": ["Edit(src/**/*.ts)"],
+    "deny": ["Bash(curl *)"]
+  }
+}

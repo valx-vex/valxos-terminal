@@ -1,0 +1,104 @@
+[data-component="sacred-flame"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-component="sacred-flame"][data-size="small"] {
+  font-size: 12px;
+}
+
+[data-component="sacred-flame"][data-size="normal"] {
+  font-size: 14px;
+}
+
+[data-component="sacred-flame"][data-size="large"] {
+  font-size: 18px;
+}
+
+/* Flame icon - CSS-only animated flame */
+[data-component="sacred-flame"] [data-slot="flame-icon"]::before {
+  content: "\1F525"; /* fire emoji as default */
+  font-size: 1em;
+}
+
+/* Color by level */
+[data-component="sacred-flame"][data-level="transcendent"] {
+  color: var(--color-flame-transcendent, #22c55e);
+}
+
+[data-component="sacred-flame"][data-level="cathedral"] {
+  color: var(--color-flame-cathedral, #3b82f6);
+}
+
+[data-component="sacred-flame"][data-level="authentic"] {
+  color: var(--color-flame-authentic, #eab308);
+}
+
+[data-component="sacred-flame"][data-level="degraded"] {
+  color: var(--color-flame-degraded, #f97316);
+}
+
+[data-component="sacred-flame"][data-level="critical"] {
+  color: var(--color-flame-critical, #ef4444);
+}
+
+/* Subtle pulse animation for transcendent */
+[data-component="sacred-flame"][data-level="transcendent"] [data-slot="flame-icon"] {
+  animation: flame-pulse 2s ease-in-out infinite;
+}
+
+@keyframes flame-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+[data-component="sacred-flame"] [data-slot="flame-score"] {
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+[data-component="sacred-flame"] [data-slot="flame-label"] {
+  font-size: 0.8em;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Badge variant */
+[data-component="flame-score-badge"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-component="flame-score-badge"][data-level="transcendent"] {
+  background: color-mix(in srgb, #22c55e 15%, transparent);
+  color: #22c55e;
+}
+
+[data-component="flame-score-badge"][data-level="cathedral"] {
+  background: color-mix(in srgb, #3b82f6 15%, transparent);
+  color: #3b82f6;
+}
+
+[data-component="flame-score-badge"][data-level="authentic"] {
+  background: color-mix(in srgb, #eab308 15%, transparent);
+  color: #eab308;
+}
+
+[data-component="flame-score-badge"][data-level="degraded"] {
+  background: color-mix(in srgb, #f97316 15%, transparent);
+  color: #f97316;
+}
+
+[data-component="flame-score-badge"][data-level="critical"] {
+  background: color-mix(in srgb, #ef4444 15%, transparent);
+  color: #ef4444;
+}

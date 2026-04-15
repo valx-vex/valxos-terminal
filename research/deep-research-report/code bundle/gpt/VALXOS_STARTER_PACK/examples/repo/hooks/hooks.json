@@ -1,0 +1,8 @@
+[
+  {
+    "event": "PreToolUse",
+    "matcher": "Bash(rm *)",
+    "command": "node",
+    "args": ["-e", "process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'Dangerous deletion blocked'}}))"]
+  }
+]

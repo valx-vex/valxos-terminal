@@ -1,0 +1,353 @@
+pack_version: '1.0'
+generated_on: '2026-04-06'
+target_executor: GPT-5.4 Codex terminal instance
+product:
+  name: VALXOS Terminal
+  category: provider-agnostic agentic development environment
+  north_star: Warp-class AI control center with clean-room Claude-style compatibility
+    and multi-model orchestration
+  public_stance: broadly accessible, open/free where realistic, BYOK-first
+  engineering_default: Rust-first implementation with native TUI + local orchestration
+    daemon
+  non_goals:
+  - do not copy proprietary implementation code
+  - do not emulate hidden vendor RAG/context-compaction internals
+  - do not block MVP on desktop/browser companion
+  - do not build full hosted platform before local control plane is stable
+  - do not reduce all providers to lowest-common-denominator if native escape hatches
+    materially improve workflows
+source_documents:
+- file: VALXOS Terminal_Founder and Market Research Report.md
+  role: market and wedge
+- file: VALXOS Terminal_Claude Compatibility Spec Research.md
+  role: compatibility contract
+- file: Multi-Model Orchestration and Control Plane Architecture for VALXOS Terminal.md
+  role: control plane and routing
+- file: Extension Systems, MCP, Rules, and Script Management Architecture for VALXOS
+    Terminal.md
+  role: extension topology
+- file: The Path to Production_A Readiness and Release Architecture for VALXOS Terminal.md
+  role: hardening and release
+- file: Clean Room, Legal, And Open Source Strategy Research.md
+  role: legal/governance/clean-room
+- file: 00_INDEX.md
+  role: prompt pack index
+- file: starting prompt.md
+  role: prompt pack duplicate/backup
+evidence_status:
+  direct_from_uploaded_docs:
+  - BYOK multi-model ADE positioning
+  - Claude-compatible config/file surfaces
+  - UMF control-plane concept
+  - routing heuristics by task type
+  - extension model domains
+  - production blockers and hardening order
+  - clean-room governance boundaries
+  synthesized_in_this_pack:
+  - Rust-first repo layout
+  - normalized internal types and naming
+  - implementation ticket ordering
+  - single canonical MVP definition
+  - gap register and decision ledger
+  missing_or_not_uploaded:
+  - full TUI/control-center research output
+  - full archaeology/reuse research output
+  - direct diff between GPT research and Gemini research for every topic
+positioning:
+  statement: Open-source agentic development environment combining modern terminal
+    UX, provider-agnostic orchestration, clean-room Claude-style compatibility, MCP-native
+    extensibility, deterministic guardrails, and BYOK economics.
+  target_users:
+  - terminal-first power users
+  - budget-conscious startup teams
+  - security-restricted or air-gapped enterprise developers
+  mvp_wedge: terminal-first developers who want Claude-style repo compatibility without
+    Anthropic lock-in or opaque spend
+core_architecture:
+  ui:
+    module: tui-shell
+    responsibility:
+    - chat/session pane
+    - block-based command output
+    - diff review
+    - model/session controls
+    - artifact browser
+    mvp:
+    - keyboard-first navigation
+    - manual model switching
+    - inline approve/reject/edit diff flow
+    - basic session browser
+  umf:
+    module: umf-core
+    meaning: Universal Message Format
+    responsibility:
+    - normalize prompts/tool schemas/context payloads
+    - translate to provider-specific request/response dialects
+    - preserve provider escape hatches
+    - drive handover/context stitching
+  routing:
+    module: routing-engine
+    mvp_mode: manual override + simple heuristic auto-route
+    future_mode: adaptive cost/latency/complexity classifier
+  execution_kernel:
+    module: orchestrator-kernel
+    principles:
+    - thin orchestrator
+    - stateless or minimally stateful workers
+    - deterministic permission gates outside LLM loop
+    - circuit breakers for repeated tool loops
+  extensions:
+    module: extension-host
+    domains:
+    - commands
+    - hooks
+    - agents
+    - skills
+    - mcp_servers
+    - rules
+    - scripts
+    - plugins
+  state:
+    module: session-store
+    artifacts:
+    - .valxos/state.json
+    - Handover_File.md
+    - Handover_Prompt.md
+    responsibility:
+    - resume sessions
+    - model handoff continuity
+    - subagent state
+    - lock/phase persistence
+  safety:
+    module: safety-boundary
+    responsibility:
+    - permission evaluation
+    - hook dispatch
+    - sandbox enforcement
+    - budget killswitches
+    - provider failure cascade
+provider_strategy:
+  anthropic:
+    role: deep refactor / hard reasoning
+    escape_hatches:
+    - extended thinking/reasoning controls
+    - timeout adaptation for long generation
+    - Claude-compatible surface ingest
+  openai:
+    role: terminal-heavy operations / computer-use workflows
+    escape_hatches:
+    - native computer-use payload path
+    - avoid over-normalizing shell/tool flows
+  google_gemini:
+    role: massive-context analysis / algorithms / UI idea generation
+    escape_hatches:
+    - suspend aggressive context compaction when large context is intentional
+  ollama:
+    role: privacy mode / cheap background jobs / air-gapped mode
+    escape_hatches:
+    - local schema repair loop for malformed JSON/tool calls
+    - zero-cloud fallback
+routing_policy:
+  manual_override: true
+  heuristics:
+  - task: complex refactor / multi-file architecture
+    route: Claude Opus/Sonnet-class
+  - task: terminal ops / devops / shell-heavy
+    route: GPT/Codex-class
+  - task: algorithms / very large context / UI synthesis
+    route: Gemini Pro-class
+  - task: background summaries / cheap repetitive work
+    route: fast cloud model or Ollama
+  - task: air-gapped or restricted code
+    route: Ollama/open-weight local
+  always_surface:
+  - active model
+  - estimated token/cost exposure when cloud provider is used
+  - failure fallback path
+  - current budget state
+claude_compatibility:
+  read_support_mvp:
+  - CLAUDE.md
+  - .claude/settings.json
+  - .claude/settings.local.json
+  - .claude/skills/*/SKILL.md
+  - .mcp.json
+  later_support:
+  - .claude/agents/*.md
+  - .claude-plugin/plugin.json
+  - ~/.claude/projects/* JSONL semantics only if needed for import tooling
+  - MCP channels/notifications
+  settings_precedence_high_to_low:
+  - managed
+  - cli_flags
+  - local
+  - project
+  - user
+  merge_rules:
+    scalars: overwrite by higher precedence
+    objects: deep merge
+    arrays: concatenate + dedupe unless field explicitly replace-only
+    note: treat exact array semantics as compatibility-sensitive and test against
+      fixtures
+  skill_contract:
+    format: markdown + YAML frontmatter
+    mvp_fields:
+    - name
+    - description
+    - argument-hint
+    - disable-model-invocation
+    - user-invocable
+    - allowed-tools
+    - context
+    loading:
+      initial_context:
+      - name
+      - description
+      lazy_load: full body only on invocation or strong relevance hit
+  hook_contract:
+    events:
+    - SessionStart
+    - UserPromptSubmit
+    - PreToolUse
+    - PostToolUse
+    - PermissionRequest
+    - Stop
+    io:
+      input: JSON via stdin
+      exit_code_0: success; optional JSON decision on stdout
+      exit_code_2: hard block; stderr surfaced
+  permissions:
+    priority: deny -> ask -> allow
+    examples:
+    - Bash(*)
+    - Read(*)
+    - Edit(**/*.ts)
+    - Bash(npm test *)
+  plugin_contract:
+    manifest: .claude-plugin/plugin.json
+    runtime_env_var: CLAUDE_PLUGIN_ROOT
+    plugin_dirs:
+    - commands/
+    - agents/
+    - skills/
+    - hooks/
+    - .mcp.json
+extension_model:
+  first_class:
+  - MCP host/client
+  - commands
+  - rules/policy packs
+  - scripts
+  - skills
+  - hooks
+  compatibility_shims:
+  - Claude plugin manifest mapping
+  - Claude hook event names
+  - Claude skill/slash command mapping
+  - Claude config path ingestion
+  scopes:
+  - enterprise_managed
+  - global_user
+  - project
+  - local_override
+  lifecycle:
+  - discovery
+  - validation
+  - resolution
+  - activation
+  - execution
+  - deactivation
+  - error
+  - quarantine
+safety_and_security:
+  hard_requirements:
+  - default-deny sensitive paths
+  - PreToolUse hook support before risky execution
+  - sandbox boundaries for filesystem and shell
+  - remote transport encryption for non-local MCP
+  - budget killswitches
+  - loop circuit breakers
+  never_allow_unreviewed:
+  - .ssh/**
+  - .aws/**
+  - shell rc/profile files
+  - system keychains/secrets stores
+  telemetry_policy:
+    default: minimal and opt-in where possible
+    never_collect_without_consent:
+    - PII
+    - full filenames/paths in sensitive contexts
+    - command history contents
+    - code payloads
+clean_room_policy:
+  team_model: spec/analysis separated from implementation where feasible
+  allowed_sources:
+  - public docs
+  - public standards
+  - black-box behavior observations
+  - public config/file formats
+  - permissively licensed code with verified provenance
+  forbidden_sources:
+  - leaked repositories
+  - internal screenshots/prompts/specs
+  - confidential partner materials without written authorization
+  - copy-paste from proprietary implementation code
+  repo_governance:
+  - DCO required
+  - CLA optional/targeted for core or corp contributions
+  - SPDX/REUSE compliance
+  - artifact signing/provenance targets
+  - NOTICE/SECURITY/CODE_OF_CONDUCT/CONTRIBUTING required
+  licensing:
+    core: Apache-2.0 recommended
+    docs: permissive docs license with SPDX tagging
+    plugins: independent license declaration required
+production:
+  release_channels:
+  - nightly
+  - beta
+  - stable
+  ship_blockers:
+  - sandbox escape to sensitive paths
+  - unencrypted remote MCP transport
+  - TUI lag/flicker above acceptable threshold
+  - privacy-violating telemetry defaults
+  - broken first-run aha flow
+  - unsigned/unnotarized public desktop bundles where platform requires it
+  hardening_order:
+  - security core
+  - rendering/perf core
+  - MCP robustness
+  - privacy/observability
+  - release automation
+  - onboarding/adoption polish
+mvp_definition:
+  must_have:
+  - fast TUI shell
+  - UMF core with provider adapters
+  - manual model switch
+  - basic heuristic auto-route
+  - CLAUDE.md ingestion
+  - settings parser with precedence
+  - basic permissions
+  - skill discovery + lazy load
+  - stdio MCP host
+  - fallback cascade
+  - state.json + handover artifacts
+  - basic diff review workflow
+  must_not_wait_for:
+  - desktop companion
+  - plugin marketplace
+  - full MCP channels
+  - full enterprise admin plane
+  - perfect Warp parity
+codex_execution_rules:
+- treat bootstrap as contract and master spec as elaboration
+- prefer small composable modules over monolith
+- write fixtures for all compatibility surfaces before clever abstractions
+- preserve provider-specific escape hatches; do not flatten them away
+- optimize for local-first operation and deterministic safety boundaries
+- mark all inferred behavior as inferred in code comments or ADRs until verified
+- if a behavior is not documented by uploaded evidence, implement behind flags or
+  adapters
+- build import compatibility, not vendor worship

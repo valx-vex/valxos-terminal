@@ -1,0 +1,22 @@
+{
+  "name": "@valxos/wiki",
+  "version": "0.1.0",
+  "description": "Local-first knowledge wiki with FTS5 search",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cli": "./src/cli.ts",
+    "./mcp": "./src/mcp-server.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/bun": "catalog:"
+  }
+}
