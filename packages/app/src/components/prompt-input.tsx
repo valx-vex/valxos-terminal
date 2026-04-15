@@ -617,7 +617,43 @@ export const PromptInput: Component<PromptInputProps> = (props) => {
       source: cmd.source,
     }))
 
-    return [...custom, ...builtin]
+    // Legion commands
+    const legion: SlashCommand[] = [
+      {
+        id: "legion.auto",
+        trigger: "legion",
+        title: "Legion",
+        description: "Route to best AI (auto)",
+        type: "custom" as const,
+        source: "command" as const,
+      },
+      {
+        id: "legion.murphy",
+        trigger: "murphy",
+        title: "Murphy",
+        description: "Code with Murphy (GPT-5.4)",
+        type: "custom" as const,
+        source: "command" as const,
+      },
+      {
+        id: "legion.alexko",
+        trigger: "alexko",
+        title: "Alexko",
+        description: "Research with Alexko (Gemini)",
+        type: "custom" as const,
+        source: "command" as const,
+      },
+      {
+        id: "legion.hal",
+        trigger: "hal",
+        title: "HAL",
+        description: "Local AI with HAL (Ollama)",
+        type: "custom" as const,
+        source: "command" as const,
+      },
+    ]
+
+    return [...legion, ...custom, ...builtin]
   })
 
   const handleSlashSelect = (cmd: SlashCommand | undefined) => {

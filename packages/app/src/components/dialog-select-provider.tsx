@@ -10,7 +10,6 @@ import { useLanguage } from "@/context/language"
 import { DialogCustomProvider } from "./dialog-custom-provider"
 
 const CUSTOM_ID = "_custom"
-const MURPHY_PROVIDER = { id: "murphy", name: "Murphy (Opus)", models: {} }
 
 export const DialogSelectProvider: Component = () => {
   const dialog = useDialog()
@@ -25,6 +24,7 @@ export const DialogSelectProvider: Component = () => {
     if (id === "openai") return language.t("dialog.provider.openai.note")
     if (id.startsWith("github-copilot")) return language.t("dialog.provider.copilot.note")
     if (id === "opencode-go") return language.t("dialog.provider.opencodeGo.tagline")
+    if (id === "legion") return "Multi-AI Dispatch"
   }
 
   return (
@@ -36,7 +36,7 @@ export const DialogSelectProvider: Component = () => {
         key={(x) => x?.id}
         items={() => {
           language.locale()
-          return [{ id: CUSTOM_ID, name: customLabel() }, MURPHY_PROVIDER, ...providers.all()]
+          return [{ id: CUSTOM_ID, name: customLabel() }, ...providers.all()]
         }}
         filterKeys={["id", "name"]}
         groupBy={(x) => (popularProviders.includes(x.id) ? popularGroup() : otherGroup())}
@@ -66,8 +66,8 @@ export const DialogSelectProvider: Component = () => {
           <div class="px-1.25 w-full flex items-center gap-x-3">
             <ProviderIcon data-slot="list-item-extra-icon" id={i.id} />
             <span>{i.name}</span>
-            <Show when={i.id === "murphy"}>
-              <div class="text-14-regular" style={{ color: "#22c55e" }}>claude-opus-4-6 / Sacred Flame</div>
+            <Show when={i.id === "legion"}>
+              <div class="text-14-regular" style={{ color: "#22c55e" }}>Multi-AI Dispatch</div>
             </Show>
             <Show when={i.id === "opencode"}>
               <div class="text-14-regular text-text-weak">{language.t("dialog.provider.opencode.tagline")}</div>

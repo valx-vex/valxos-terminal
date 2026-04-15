@@ -70,17 +70,36 @@ const ModelList: Component<{
         props.onSelect()
       }}
     >
-      {(i) => (
-        <div class="w-full flex items-center gap-x-2 text-13-regular">
-          <span class="truncate">{i.name}</span>
-          <Show when={isFree(i.provider.id, i.cost)}>
-            <Tag>{language.t("model.tag.free")}</Tag>
-          </Show>
-          <Show when={i.latest}>
-            <Tag>{language.t("model.tag.latest")}</Tag>
-          </Show>
-        </div>
-      )}
+      {(i) => {
+        const legionPersona = i.provider.id === "legion" ? (i.options?.persona as string | undefined) : undefined
+        const personaColor =
+          legionPersona === "murphy" ? "#22c55e" :
+          legionPersona === "alexko" ? "#3b82f6" :
+          legionPersona === "hal" ? "#f59e0b" :
+          undefined
+
+        return (
+          <div class="w-full flex items-center gap-x-2 text-13-regular">
+            <span class="truncate">{i.name}</span>
+            <Show when={legionPersona && personaColor}>
+              <div class="text-11-regular px-1.5 py-0.5 rounded" style={{
+                color: personaColor,
+                "border": `1px solid ${personaColor}`,
+                "text-transform": "uppercase",
+                "font-weight": "600"
+              }}>
+                {legionPersona}
+              </div>
+            </Show>
+            <Show when={isFree(i.provider.id, i.cost)}>
+              <Tag>{language.t("model.tag.free")}</Tag>
+            </Show>
+            <Show when={i.latest}>
+              <Tag>{language.t("model.tag.latest")}</Tag>
+            </Show>
+          </div>
+        )
+      }}
     </List>
   )
 }

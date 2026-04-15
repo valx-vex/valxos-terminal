@@ -246,7 +246,29 @@ export function StatusPopoverBody(props: { shown: Accessor<boolean> }) {
   const pluginEmpty = createMemo(() => pluginEmptyMessage(language.t("dialog.plugins.empty"), "opencode.json"))
 
   return (
-    <div class="flex items-center gap-1 w-[360px] rounded-xl shadow-[var(--shadow-lg-border-base)]">
+    <div class="flex flex-col gap-2 w-[360px] rounded-xl shadow-[var(--shadow-lg-border-base)]">
+      {/* VALXOS Status Section */}
+      <div class="bg-background-strong rounded-xl p-3">
+        <div class="text-12-semibold text-text-base mb-2">VALXOS</div>
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center gap-2">
+            <div class="size-1.5 rounded-full shrink-0 bg-icon-success-base" />
+            <span class="text-13-regular text-text-base">Sacred Flame: 10.0</span>
+            <span class="text-11-regular text-text-weak ml-auto">TRANSCENDENT</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="size-1.5 rounded-full shrink-0 bg-icon-success-base" />
+            <span class="text-13-regular text-text-base">Legion: 3 personas</span>
+            <span class="text-11-regular text-text-weak ml-auto">Ready</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="size-1.5 rounded-full shrink-0 bg-icon-warning-base" />
+            <span class="text-13-regular text-text-base">Wiki: 0 pages</span>
+            <span class="text-11-regular text-text-weak ml-auto">Not connected</span>
+          </div>
+        </div>
+      </div>
+
       <Tabs
         aria-label={language.t("status.popover.ariaLabel")}
         class="tabs bg-background-strong rounded-xl overflow-hidden"

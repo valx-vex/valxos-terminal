@@ -4,7 +4,7 @@ import { useParams } from "@solidjs/router"
 import { createMemo } from "solid-js"
 
 export const popularProviders = [
-  "murphy",
+  "legion",
   "opencode",
   "opencode-go",
   "anthropic",

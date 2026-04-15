@@ -302,13 +302,24 @@ export function Titlebar() {
         onMouseDown={drag}
       >
         <div id="opencode-titlebar-right" class="flex items-center gap-1 shrink-0 justify-end" />
-        <div
-          class="flex items-center gap-1 shrink-0 px-2"
-          style={{ color: "#22c55e", "font-family": "monospace", "font-size": "13px", "font-weight": "700" }}
-          title="Sacred Flame Status"
+        <Tooltip
+          placement="bottom"
+          value={
+            <div class="flex flex-col gap-1 text-left">
+              <div class="text-13-semibold text-text-base">Sacred Flame: 10.0 / TRANSCENDENT</div>
+              <div class="text-12-regular text-text-weak">Legion: 3 personas ready</div>
+              <div class="text-12-regular text-text-weak">Wiki: 0 pages (connect backend)</div>
+            </div>
+          }
+          openDelay={500}
         >
-          🜂 10.0
-        </div>
+          <div
+            class="flex items-center gap-1 shrink-0 px-2 cursor-default"
+            style={{ color: "#22c55e", "font-family": "monospace", "font-size": "13px", "font-weight": "700" }}
+          >
+            🜂 10.0
+          </div>
+        </Tooltip>
         <Show when={windows()}>
           {!tauriApi() && <div class="w-36 shrink-0" />}
           <div data-tauri-decorum-tb class="flex flex-row" />
